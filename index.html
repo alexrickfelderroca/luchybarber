@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./react.production.min.js"></script>
+<script src="./react-dom.production.min.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Archivo:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#0c0c0e;color:#fff;font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none}
+  @keyframes lb-marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes lb-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+  .lb-js .reveal{opacity:0;transform:translateY(28px)}
+  .lb-js .reveal.in{opacity:1;transform:none}
+  .reveal{transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1)}
+  #lb-nav{transition:background .3s, box-shadow .3s}
+  #lb-nav.scrolled{background:rgba(10,10,12,.92);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+  .lb-burger{display:none}
+  .lb-redbtn{transition:background .2s, transform .2s}
+  .lb-redbtn:hover{background:#ff1437;transform:translateY(-2px)}
+  .lb-outbtn{transition:border-color .2s,background .2s,color .2s}
+  .lb-outbtn:hover{border-color:#fff;background:#fff;color:#0c0c0e}
+  .lb-darkbtn{transition:background .2s, transform .2s}
+  .lb-darkbtn:hover{background:#000;transform:translateY(-2px)}
+  .lb-link{transition:color .2s}
+  .lb-link:hover{color:#fff}
+  .lb-navlink{position:relative;transition:color .2s}
+  .lb-navlink:hover{color:#fff}
+  .lb-navlink::after{content:'';position:absolute;left:0;right:100%;bottom:-6px;height:2px;background:#E4002B;transition:right .25s}
+  .lb-navlink:hover::after{right:0}
+  .lb-imgz-wrap{overflow:hidden}
+  .lb-imgz{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+  .lb-imgz-wrap:hover .lb-imgz{transform:scale(1.07)}
+  .lb-card-hover{transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s, border-color .35s}
+  .lb-card-hover:hover{transform:translateY(-6px)}
+  .lb-faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .lb-faq-ic{transition:transform .3s}
+  .lb-play{transition:transform .3s, background .2s}
+  .lb-reelcard:hover .lb-play{transform:translate(-50%,-50%) scale(1.12);background:#E4002B;color:#fff}
+  .lb-gbtn{transition:background .2s,color .2s,border-color .2s}
+  #lb-hours [data-day].today{background:rgba(228,0,43,.14);border-left:3px solid #E4002B}
+  .fp-card{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+  .fp-card:hover{transform:translateY(-16px);box-shadow:0 40px 80px rgba(0,0,0,.6)}
+  .fp-card:hover .fp-cta{opacity:1!important}
+  #fp-group,.fp-row{will-change:transform,opacity}
+  #tl-fill{will-change:height}
+  @media(max-width:980px){.lb-fama-grid{grid-template-columns:repeat(3,1fr)!important}}
+  @media(max-width:880px){
+    .lb-desktop-nav{display:none!important}
+    .lb-burger{display:flex!important}
+    .lb-hero-grid{grid-template-columns:1fr!important}
+    .lb-hero-img{min-height:340px!important;order:-1}
+    .lb-2col{grid-template-columns:1fr!important}
+    .lb-stat{grid-template-columns:repeat(2,1fr)!important}
+    .lb-hide-m{display:none!important}
+  }
+  @media(max-width:620px){
+    .lb-fama-grid{grid-template-columns:repeat(2,1fr)!important}
+    .lb-sec{padding-left:18px!important;padding-right:18px!important}
+    .lb-stat>div{padding:18px 6px!important}
+  }
+  /* ===== Booksy card ===== */
+  .bk-svc{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 12px;border-radius:12px;text-decoration:none;transition:background .2s;border-bottom:1px solid rgba(255,255,255,.05)}
+  .bk-body>.bk-svc:last-child{border-bottom:none}
+  .bk-svc:hover{background:rgba(255,255,255,.045)}
+  .bk-svc-info{min-width:0}
+  .bk-svc-name{font-family:'Barlow Condensed';font-weight:700;font-size:19px;letter-spacing:.02em;text-transform:uppercase;color:#fff}
+  .bk-svc-desc{font-family:'Archivo',sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-top:2px}
+  .bk-svc-dur{font-family:'Space Mono';font-size:11.5px;color:rgba(255,255,255,.42);margin-top:6px;letter-spacing:.02em}
+  .bk-svc-dur .bk-clock{opacity:.7}
+  .bk-svc-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+  .bk-svc-price{font-family:'Anton';font-size:22px;color:#E4002B;line-height:1}
+  .bk-book{font-family:'Barlow Condensed';font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(228,0,43,.16);border:1px solid rgba(228,0,43,.5);padding:7px 15px;border-radius:30px;transition:background .2s,color .2s,transform .2s;white-space:nowrap}
+  .bk-svc:hover .bk-book{background:#E4002B;color:#fff;transform:translateY(-1px)}
+  .bk-svc-vip{background:linear-gradient(135deg,rgba(228,0,43,.92),rgba(156,0,32,.92));margin:8px 0 4px;border-radius:12px;border-bottom:none}
+  .bk-svc-vip:hover{background:linear-gradient(135deg,#E4002B,#9c0020)}
+  .bk-svc-vip .bk-svc-desc{color:rgba(255,255,255,.85)}
+  .bk-cta{transition:background .2s,transform .2s}
+  .bk-cta:hover{background:#ff1437;transform:translateY(-2px)}
+  .bk-staff{transition:color .2s}
+  .bk-staff:hover{color:#fff}
+  .bk-wa,.bk-ig{transition:background .2s,filter .2s,transform .2s}
+  .bk-wa:hover{background:#20bd5a;transform:translateY(-2px)}
+  .bk-ig:hover{filter:brightness(1.08);transform:translateY(-2px)}
+  @media(max-width:560px){
+    .bk-head{justify-content:center;text-align:center}
+    .bk-cta{width:100%;text-align:center}
+    .bk-svc-name{font-size:17px}
+  }
+  /* ===== Reels 3D fan ===== */
+  #reels{overflow-x:clip}
+  .rf-fan{display:flex;gap:12px;overflow-x:auto;padding:6px 4px 18px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .rf-fan::-webkit-scrollbar{height:6px}
+  .rf-fan::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:6px}
+  .rf-card{position:relative;flex:0 0 64%;max-width:240px;aspect-ratio:9/16;border-radius:16px;overflow:hidden;cursor:pointer;scroll-snap-align:center;box-shadow:0 20px 40px rgba(0,0,0,.45)}
+  .rf-shade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(0,0,0,.6))}
+  .rf-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;color:#0c0c0e;font-size:18px;padding-left:3px}
+  .rf-views{position:absolute;left:11px;bottom:11px;font-family:'Barlow Condensed';font-weight:700;font-size:13px;letter-spacing:.05em;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+  .rf-card:hover .rf-play{background:#E4002B;color:#fff}
+  @media(min-width:900px){
+    .rf-fan{overflow:visible;justify-content:center;align-items:center;perspective:2200px;padding:56px 0 34px;min-height:520px;gap:0}
+    .rf-card{flex:0 0 auto;width:220px;margin-left:-94px;z-index:var(--z,1);transform:rotateY(-42deg) translateY(var(--y,0));transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s;box-shadow:16px 0 36px rgba(0,0,0,.45);scroll-snap-align:none}
+    .rf-card:first-child{margin-left:0}
+    .rf-fan:hover .rf-card{transform:rotateY(-42deg) translateY(0)}
+    .rf-card:hover{transform:rotateY(0deg) translateY(-24px) scale(1.06);z-index:60;box-shadow:0 40px 80px rgba(0,0,0,.6)}
+  }
+  /* ===== Achievements band ===== */
+  .lb-ach{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .ach-item{background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:26px 16px;text-align:center;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s}
+  .ach-item:hover{transform:translateY(-6px);border-color:rgba(228,0,43,.5)}
+  .ach-num{font-family:'Anton';font-size:clamp(34px,4.4vw,50px);color:#E4002B;line-height:1}
+  .ach-lbl{font-family:'Barlow Condensed';font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px;color:rgba(255,255,255,.72);margin-top:8px;line-height:1.2}
+  @media(max-width:860px){.lb-ach{grid-template-columns:repeat(2,1fr)}}
+  /* ===== Confían marquee ===== */
+  .cf-marq{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .cf-track{display:flex;align-items:center;gap:38px;width:max-content;animation:lb-marq 48s linear infinite}
+  .cf-track.cf-rev{animation-direction:reverse;animation-duration:40s}
+  .cf-marq:hover .cf-track{animation-play-state:paused}
+  .cf-badge{display:flex;flex-direction:column;align-items:center;gap:9px;flex-shrink:0;width:118px;filter:grayscale(1) opacity(.72);transition:filter .3s,transform .3s}
+  .cf-badge:hover{filter:grayscale(0) opacity(1);transform:translateY(-4px)}
+  .cf-badge img{height:60px;width:auto;object-fit:contain}
+  .cf-badge span{font-family:'Barlow Condensed';font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px;color:rgba(255,255,255,.65);white-space:nowrap}
+  .cf-name{font-family:'Anton';font-size:clamp(22px,3vw,34px);text-transform:uppercase;color:#fff;white-space:nowrap;opacity:.85}
+  .cf-dot{color:#E4002B;font-size:15px}
+  /* ===== Press ===== */
+  .lb-press-logo{font-family:'Anton';font-size:clamp(30px,5vw,52px);letter-spacing:.02em;color:#fff;text-transform:uppercase;opacity:.92}
+  .lb-quote{font-family:'Anton';font-weight:400;font-size:clamp(34px,6vw,64px);line-height:1;margin:22px 0 0;color:#E4002B;text-transform:uppercase}
+  /* ===== Reviews (Google · sticky stack) ===== */
+  .rv-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:.92fr 1.08fr;gap:56px;align-items:start}
+  .rv-left{position:sticky;top:92px;align-self:start}
+  .rv-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:30px;padding:6px 14px;font-family:'Barlow Condensed';font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:13px;color:#5a534c}
+  .rv-tag .rv-dot{width:8px;height:8px;border-radius:50%;background:#1ed760}
+  .rv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0}
+  .rv-stat{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:16px 8px;text-align:center}
+  .rv-stat b{display:block;font-family:'Anton';font-size:30px;color:#14110f;line-height:1}
+  .rv-stat span{display:block;font-family:'Barlow Condensed';font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:12px;color:#8a817a;margin-top:5px}
+  .rv-stack{display:flex;flex-direction:column;gap:16px;padding-bottom:60px}
+  .rv-card{position:sticky;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;padding:24px 24px 26px;box-shadow:0 16px 40px rgba(0,0,0,.1)}
+  .rv-head{display:flex;align-items:center;gap:13px}
+  .rv-ava{width:46px;height:46px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Anton';font-size:17px;color:#fff}
+  .rv-who{flex:1;min-width:0}
+  .rv-name{font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.02em;color:#14110f}
+  .rv-sub{font-family:'Space Mono';font-size:11px;color:#9a9089;margin-top:1px}
+  .rv-g{width:20px;height:20px;flex-shrink:0}
+  .rv-stars{color:#f5a623;font-size:15px;letter-spacing:2px;margin:14px 0 10px}
+  .rv-quote{margin:0;font-size:15.5px;line-height:1.6;color:#3a342e}
+  @media(max-width:900px){
+    .rv-grid{grid-template-columns:1fr;gap:28px}
+    .rv-left{position:static;top:auto}
+    .rv-stack{padding-bottom:0}
+    .rv-card{position:static!important;top:auto!important;box-shadow:0 10px 26px rgba(0,0,0,.08)}
+  }
+</style>
+</helmet>
+
+<div id="lb-site" data-screen-label="Web Luchybarber" style="background:#0c0c0e;overflow-x:clip">
+
+  <!-- ===================== NAV ===================== -->
+  <header id="lb-nav" style="position:sticky;top:0;z-index:50;padding:16px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+    <a href="#inicio" style="font-family:'Anton';font-size:25px;letter-spacing:.01em;line-height:1"><span style="color:#fff">LUCHY</span><span style="color:#E4002B">BARBER</span></a>
+    <nav class="lb-desktop-nav" style="display:flex;gap:24px;font-family:'Barlow Condensed';font-weight:600;font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.72)">
+      <a class="lb-navlink" href="#servicios" data-en="Services">Servicios</a>
+      <a class="lb-navlink" href="#fama" data-en="Wall of fame">Muro de fama</a>
+      <a class="lb-navlink" href="#reels" data-en="Reels">Reels</a>
+      <a class="lb-navlink" href="#equipo" data-en="Team">Equipo</a>
+      <a class="lb-navlink" href="#ubicacion" data-en="Find us">Cómo llegar</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="lb-langbtn lb-link" onClick="{{ toggleLang }}" style="font-family:'Space Mono';font-size:13px;color:rgba(255,255,255,.6);letter-spacing:.05em">EN</button>
+      <a class="lb-redbtn lb-hide-m" href="#reservar" style="font-family:'Barlow Condensed';font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase;background:#E4002B;color:#fff;padding:11px 20px;border-radius:3px" data-en="Book now">Reservar</a>
+      <button class="lb-burger" onClick="{{ toggleMenu }}" aria-label="Menu" style="width:42px;height:42px;border:1px solid rgba(255,255,255,.2);border-radius:6px;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:18px;height:2px;background:#fff;display:block"></span><span style="width:18px;height:2px;background:#fff;display:block"></span><span style="width:18px;height:2px;background:#fff;display:block"></span></button>
+    </div>
+  </header>
+
+  <!-- mobile menu -->
+  <div id="lb-mobile" data-open="0" style="display:none;position:fixed;inset:0;z-index:49;background:rgba(8,8,10,.98);backdrop-filter:blur(8px);flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center">
+    <a class="lb-link" href="#servicios" onClick="{{ closeMenu }}" style="font-family:'Anton';font-size:34px;text-transform:uppercase;color:#fff" data-en="Services">Servicios</a>
+    <a class="lb-link" href="#fama" onClick="{{ closeMenu }}" style="font-family:'Anton';font-size:34px;text-transform:uppercase;color:#fff" data-en="Wall of fame">Muro de fama</a>
+    <a class="lb-link" href="#reels" onClick="{{ closeMenu }}" style="font-family:'Anton';font-size:34px;text-transform:uppercase;color:#fff" data-en="Reels">Reels</a>
+    <a class="lb-link" href="#equipo" onClick="{{ closeMenu }}" style="font-family:'Anton';font-size:34px;text-transform:uppercase;color:#fff" data-en="Team">Equipo</a>
+    <a class="lb-link" href="#resenas" onClick="{{ closeMenu }}" style="font-family:'Anton';font-size:34px;text-transform:uppercase;color:#fff" data-en="Reviews">Reseñas</a>
+    <a class="lb-link" href="#ubicacion" onClick="{{ closeMenu }}" style="font-family:'Anton';font-size:34px;text-transform:uppercase;color:#fff" data-en="Find us">Cómo llegar</a>
+    <a class="lb-redbtn" href="#reservar" onClick="{{ closeMenu }}" style="margin-top:22px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.12em;text-transform:uppercase;background:#E4002B;color:#fff;padding:14px 30px;border-radius:3px" data-en="Book now">Reservar</a>
+    <button class="lb-link" onClick="{{ closeMenu }}" style="position:absolute;top:24px;right:26px;font-family:'Space Mono';font-size:24px;color:#fff">✕</button>
+  </div>
+
+  <!-- ===================== HERO (neón ladrillo) ===================== -->
+  <section id="inicio" style="position:relative;min-height:100vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;background:#05070c">
+    <img src="uploads/screen.png" alt="Luchybarber — rótulo de neón sobre pared de ladrillo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%">
+    <div style="position:absolute;inset:0;background:radial-gradient(135% 105% at 50% 28%, rgba(5,7,12,0) 38%, rgba(5,7,12,.55) 100%)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:68%;background:linear-gradient(to bottom, rgba(12,12,14,0) 0%, rgba(12,12,14,.74) 44%, #0c0c0e 84%);pointer-events:none"></div>
+    <div style="position:relative;z-index:1;width:100%;max-width:880px;padding:0 28px 7vh;text-align:center">
+      <p style="margin:0 auto;max-width:540px;color:rgba(255,255,255,.85);font-size:clamp(16px,2.1vw,21px);line-height:1.5" data-en="Fades, designs and beard work with our own signature. Where Sporting players, musicians and half of Gijón get their cut.">Fades, diseños y barba con sello propio. Donde se cortan los jugadores del Sporting, la música y media Gijón.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:13px;justify-content:center;margin-top:30px">
+        <a class="lb-redbtn" href="#reservar" style="font-family:'Barlow Condensed';font-weight:700;font-size:16px;letter-spacing:.1em;text-transform:uppercase;background:#E4002B;color:#fff;padding:15px 28px;border-radius:3px" data-en="Book your cut →">Reservar cita →</a>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:9px;margin-top:26px;font-family:'Space Mono';font-size:12px;letter-spacing:.1em;color:rgba(255,255,255,.55);text-transform:uppercase"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#1ed760;animation:lb-pulse 2s ease infinite"></span><span id="lb-openbadge" data-open="0">Abierto ahora</span> · Gijón · 4.8★ Google</div>
+    </div>
+  </section>
+
+  <!-- ===================== STAT BAR ===================== -->
+  <div class="lb-stat" style="display:grid;grid-template-columns:repeat(4,1fr);background:#E4002B;color:#fff;text-align:center">
+    <div style="padding:22px 10px;border-right:1px solid rgba(255,255,255,.22)"><div style="font-family:'Anton';font-size:clamp(28px,4vw,36px);line-height:1">4.8★</div><div style="font-family:'Barlow Condensed';letter-spacing:.18em;text-transform:uppercase;font-size:12px;margin-top:4px;color:rgba(255,255,255,.85)" data-en="Rating">Valoración</div></div>
+    <div style="padding:22px 10px;border-right:1px solid rgba(255,255,255,.22)"><div style="font-family:'Anton';font-size:clamp(28px,4vw,36px);line-height:1">156</div><div style="font-family:'Barlow Condensed';letter-spacing:.18em;text-transform:uppercase;font-size:12px;margin-top:4px;color:rgba(255,255,255,.85)" data-en="Reviews">Reseñas</div></div>
+    <div style="padding:22px 10px;border-right:1px solid rgba(255,255,255,.22)"><div style="font-family:'Anton';font-size:clamp(28px,4vw,36px);line-height:1">+90</div><div style="font-family:'Barlow Condensed';letter-spacing:.18em;text-transform:uppercase;font-size:12px;margin-top:4px;color:rgba(255,255,255,.85)" data-en="Cracks cut">Cracks cortados</div></div>
+    <div style="padding:22px 10px"><div style="font-family:'Anton';font-size:clamp(28px,4vw,36px);line-height:1">2021</div><div style="font-family:'Barlow Condensed';letter-spacing:.18em;text-transform:uppercase;font-size:12px;margin-top:4px;color:rgba(255,255,255,.85)" data-en="Since">Desde</div></div>
+  </div>
+
+  <!-- ===================== SERVICIOS · RESERVA (estilo Booksy) ===================== -->
+  <section id="servicios" class="lb-sec" style="scroll-margin-top:80px;padding:74px 30px 64px;background:#0c0c0e">
+    <div style="max-width:1060px;margin:0 auto">
+      <div class="reveal" style="text-align:center;margin-bottom:26px">
+        <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:10px" data-en="Booking">Reserva</div>
+        <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(38px,5.5vw,60px);line-height:.95;margin:0;text-transform:uppercase">Reserva tu <span style="color:#E4002B" data-en="appointment">cita</span></h2>
+        <p style="max-width:440px;margin:14px auto 0;color:rgba(255,255,255,.55);font-size:14px;line-height:1.55" data-en="No apps, no sign-ups — the fastest way to book at Luchy Barber.">Sin apps ni registros: la forma más rápida de reservar en Luchy Barber.</p>
+      </div>
+
+      <!-- Ficha estilo Booksy -->
+      <div class="reveal bk-card" style="background:#141416;border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.5)">
+        <!-- Cabecera del negocio -->
+        <div class="bk-head" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:24px 26px;background:linear-gradient(180deg,#1b1b1e,#141416);border-bottom:1px solid rgba(255,255,255,.08)">
+          <div class="bk-avatar" style="width:74px;height:74px;border-radius:16px;flex-shrink:0;background:linear-gradient(135deg,#E4002B,#9c0020);display:flex;align-items:center;justify-content:center;font-family:'Anton';font-size:30px;color:#fff;box-shadow:0 10px 26px rgba(228,0,43,.45)">LB</div>
+          <div style="flex:1;min-width:210px">
+            <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+              <h3 style="font-family:'Anton';font-weight:400;font-size:26px;margin:0;letter-spacing:.01em">Luchy Barber</h3>
+              <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(30,215,96,.14);color:#1ed760;font-family:'Barlow Condensed';font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:30px" data-en="✔ Top rated">✔ Top valorada</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:7px;font-family:'Barlow Condensed';font-size:14px;color:rgba(255,255,255,.7)">
+              <span style="color:#ffb400;letter-spacing:1px">★★★★★</span>
+              <b style="color:#fff">4,8</b>
+              <span data-en="156 reviews">156 reseñas</span>
+              <span style="opacity:.4">·</span>
+              <span>Gijón, Asturias</span>
+            </div>
+            <div style="margin-top:8px;display:flex;align-items:center;gap:8px;font-family:'Space Mono';font-size:12px;letter-spacing:.06em;text-transform:uppercase"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#1ed760;animation:lb-pulse 2s ease infinite"></span><span id="lb-openbadge3" style="color:#1ed760">Abierto ahora</span></div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0">
+            <a class="bk-wa" data-book href="#reservar" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-family:'Barlow Condensed';font-weight:700;font-size:16px;letter-spacing:.06em;text-transform:uppercase;background:#25D366;color:#08130c;padding:14px 22px;border-radius:10px;white-space:nowrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+            <a class="bk-ig" href="https://www.instagram.com/luchybarber/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-family:'Barlow Condensed';font-weight:700;font-size:16px;letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);color:#fff;padding:14px 22px;border-radius:10px;white-space:nowrap">Instagram</a>
+          </div>
+        </div>
+
+        <!-- Reserva por WhatsApp / Instagram -->
+        <div class="bk-body" style="padding:24px 26px 28px;text-align:center">
+          <p style="margin:0 auto;max-width:460px;color:rgba(255,255,255,.62);font-size:15px;line-height:1.6" data-en="No apps, no sign-ups: message us on WhatsApp or Instagram and we'll give you a slot. Quick reply, real people.">Sin apps ni registros: escríbenos por <b style="color:#fff">WhatsApp</b> o <b style="color:#fff">Instagram</b> y te damos hueco. Respuesta rápida, gente real.</p>
+        </div>
+
+        <!-- Equipo -->
+        <a href="#equipo" class="bk-staff" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;border-top:1px solid rgba(255,255,255,.08);font-family:'Barlow Condensed';font-size:15px;letter-spacing:.04em;color:rgba(255,255,255,.65)"><span data-en="Choose your barber:">Elige tu barbero:</span> <b style="color:#fff">Luchy</b> · David · Viti <span style="color:#E4002B">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MURO DE LA FAMA (parallax 3D) ===================== -->
+  <section id="fama" style="background:#0c0c0e;position:relative">
+    <div style="background:#E4002B;color:#fff;overflow:hidden;white-space:nowrap;padding:11px 0">
+      <div style="display:inline-block;animation:lb-marq 28s linear infinite;font-family:'Anton';font-size:22px;letter-spacing:.04em;text-transform:uppercase">REAL SPORTING · DUKI · YSY A · ARTURO COELLO · RECYCLED J · EL JINCHO · IZQUIERDOZ · CRO · DAVILES DE NOVELDA · GAZIR · REAL SPORTING · DUKI · YSY A · ARTURO COELLO · RECYCLED J · EL JINCHO · IZQUIERDOZ · CRO · DAVILES DE NOVELDA · GAZIR ·&nbsp;</div>
+    </div>
+    <div id="fp-root" style="position:relative;height:280vh;overflow:hidden;perspective:1200px">
+      <div style="max-width:1240px;margin:0 auto;padding:54px 30px 0;position:relative;z-index:2">
+        <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:10px" data-en="Wall of fame">Muro de la fama</div>
+        <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(40px,6vw,88px);line-height:.9;margin:0;text-transform:uppercase"><span data-en="They pass through">Pasan por el</span> <span style="color:#E4002B" data-en="our chair">sillón</span></h2>
+        <p style="max-width:460px;margin:16px 0 0;color:rgba(255,255,255,.6);font-size:15px;line-height:1.55" data-en="Footballers, artists and world-class athletes. Tap anyone to see who they are.">Futbolistas, artistas y deportistas de élite. Haz clic en cualquiera para ver quién es.</p>
+      </div>
+      <div id="fp-group" style="transform-style:preserve-3d;padding-top:30px;margin-top:18px">
+        <div class="fp-row" data-dir="1" style="display:flex;flex-direction:row-reverse;gap:clamp(28px,4.5vw,80px);margin-bottom:clamp(22px,3vw,56px)">
+          <a class="fp-card" href="https://www.instagram.com/cali_izquierdoz24/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/01_DaNf7RDjJk_img.jpg" alt="Izquierdoz" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Izquierdoz</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px" data-en="Captain · R. Sporting">Capitán · R. Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/arturocoello__/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/08_DVgRtn-DG9G_img.jpg" alt="Arturo Coello" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Arturo Coello</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px" data-en="World Nº1 · Padel">Nº1 mundial · Pádel</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/duki/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/20_CgNSPsFIIZd_img.jpg" alt="Duki y Cro" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Duki &amp; Cro</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px" data-en="Music">Música</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/ysy__a/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/19_Cu5FlRno01W_img.jpg" alt="YSY A" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">YSY A</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px" data-en="Music · Argentina">Música · Argentina</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/recycledj/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/15_DLkKfFdIsup_img.jpg" alt="Recycled J" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Recycled J</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px" data-en="Music">Música</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+        </div>
+        <div class="fp-row" data-dir="-1" style="display:flex;gap:clamp(28px,4.5vw,80px);margin-bottom:clamp(22px,3vw,56px)">
+          <a class="fp-card" href="https://www.instagram.com/eljincholagentefuerte/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/18_CyDy0mloQE4_img.jpg" alt="El Jincho" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">El Jincho</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px" data-en="Music">Música</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/jesusbernal7/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/07_DXMTLgvDBhT_img.jpg" alt="Jesús Bernal" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Jesús Bernal</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/ericcurbelo6/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/04_DZH3XZ1DC9U_img.jpg" alt="Eric Curbelo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Eric Curbelo</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/ryanezalabart/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/13_DOOCw0GjFZW_img.jpg" alt="Zalabart" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Zalabart</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px" data-en="Goalkeeper · Sporting">Portero · Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/justin.smi6/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/03_DZaAK47jAD3_img.jpg" alt="Justin" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Justin</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">RCD Espanyol</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+        </div>
+        <div class="fp-row" data-dir="1" style="display:flex;flex-direction:row-reverse;gap:clamp(28px,4.5vw,80px)">
+          <a class="fp-card" href="https://www.instagram.com/pablog_11/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/05_DYhRTbtDE7u_img.jpg" alt="Pablo García" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Pablo García</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/gasparcampos/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/fullres/images/C9fzIfKIWec_1.jpg" alt="Gaspar Campos" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Gaspar Campos</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/davilesdenovelda_oficial/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/fullres/images/CvFrb0oov1h_1.jpg" alt="Davilés de Novelda" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Davilés de Novelda</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Música</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/roberpier4/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/fullres/images/DCSQlEVIasH_1.jpg" alt="Rober Pier" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Rober Pier</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+        </div>
+        <div class="fp-row" data-dir="-1" style="display:flex;gap:clamp(28px,4.5vw,80px)">
+          <a class="fp-card" href="https://www.instagram.com/jonrodri23/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/fullres/images/C3nHKIDoFsW_1.jpg" alt="Jony" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Jony</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px" data-en="Icon · R. Sporting">Icono · R. Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/coteroces/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/fullres/images/CxahypWonNR_1.jpg" alt="Cote Roces" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 16%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Cote Roces</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/polvalentin_2/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/fullres/images/Crao4EDIPTG_1.jpg" alt="Pol Valentín" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 16%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Pol Valentín</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/_josemarsa/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/fullres/images/CsbM66QLSgp_1.jpg" alt="José Marsà" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 16%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">José Marsà</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+          <a class="fp-card" href="https://www.instagram.com/marasnikola18/" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;width:clamp(300px,31vw,470px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:block;box-shadow:0 24px 55px rgba(0,0,0,.5)"><img src="uploads/luchybarber_media/fullres/images/DKj1qnBIkP8_1.jpg" alt="Nikola Maras" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 12%"><div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),rgba(0,0,0,0) 52%)"></div><div style="position:absolute;left:0;right:0;bottom:0;padding:18px;font-family:'Barlow Condensed'"><div style="font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:22px;line-height:1.05">Nikola Maras</div><div style="color:#E4002B;font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin-top:3px">Real Sporting</div></div><div class="fp-cta" style="position:absolute;top:13px;right:13px;background:rgba(228,0,43,.95);color:#fff;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11px;padding:6px 10px;border-radius:30px;opacity:0" data-en="View profile ↗">Ver perfil ↗</div></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== LOGROS / CIFRAS ===================== -->
+  <section id="logros" class="lb-sec" style="padding:64px 30px;background:#0c0c0e;border-top:1px solid rgba(255,255,255,.06)">
+    <div style="max-width:1240px;margin:0 auto">
+      <div class="reveal" style="text-align:center;margin-bottom:34px">
+        <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:10px" data-en="The numbers">Los números</div>
+        <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(32px,5vw,54px);line-height:.95;margin:0;text-transform:uppercase">No es solo un corte, es un <span style="color:#E4002B" data-en="phenomenon">fenómeno</span></h2>
+      </div>
+      <div class="lb-ach reveal">
+        <div class="ach-item"><div class="ach-num">809K</div><div class="ach-lbl" data-en="views on one reel">reproducciones en un reel</div></div>
+        <div class="ach-item"><div class="ach-num">15+</div><div class="ach-lbl" data-en="Sporting players">jugadores del Sporting</div></div>
+        <div class="ach-item"><div class="ach-num">Nº1</div><div class="ach-lbl" data-en="padel world nº1 in the chair">mundial de pádel en el sillón</div></div>
+        <div class="ach-item"><div class="ach-num">10+</div><div class="ach-lbl" data-en="football clubs">clubes de fútbol</div></div>
+        <div class="ach-item"><div class="ach-num">2021</div><div class="ach-lbl" data-en="cutting cracks since">cortando cracks desde</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONFÍAN EN EL SILLÓN (clubes + famosos) ===================== -->
+  <section id="confian" class="lb-sec" style="padding:70px 0;background:#101012;border-top:1px solid rgba(255,255,255,.06);overflow:hidden">
+    <div class="reveal" style="max-width:1240px;margin:0 auto 30px;padding:0 30px;text-align:center">
+      <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:10px" data-en="They trust the chair">Confían en el sillón</div>
+      <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(30px,4.6vw,50px);line-height:.98;margin:0;text-transform:uppercase">De <span style="color:#E4002B" data-en="top-flight dressing rooms">vestuarios de Primera</span> a los escenarios</h2>
+      <p style="max-width:560px;margin:14px auto 0;color:rgba(255,255,255,.55);font-size:15px;line-height:1.55" data-en="Clubs and artists that sit in Luchy's chair. Real jerseys, real people.">Clubes y artistas que se sientan en el sillón de Luchy. Camisetas reales, gente real.</p>
+    </div>
+    <div class="cf-marq" aria-hidden="true">
+      <div class="cf-track">
+        <div class="cf-badge"><img src="uploads/clubs/sporting.png" alt="Real Sporting" loading="lazy"><span>Real Sporting</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/espanyol.png" alt="RCD Espanyol" loading="lazy"><span>RCD Espanyol</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/boca.png" alt="Boca Juniors" loading="lazy"><span>Boca Jrs</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/realmadrid.png" alt="Real Madrid" loading="lazy"><span>Real Madrid</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/getafe.png" alt="Getafe CF" loading="lazy"><span>Getafe CF</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/cadiz.png" alt="Cádiz CF" loading="lazy"><span>Cádiz CF</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/malaga.png" alt="Málaga CF" loading="lazy"><span>Málaga CF</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/huesca.png" alt="SD Huesca" loading="lazy"><span>SD Huesca</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/eibar.png" alt="SD Eibar" loading="lazy"><span>SD Eibar</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/andorra.png" alt="FC Andorra" loading="lazy"><span>FC Andorra</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/sportingcp.png" alt="Sporting CP" loading="lazy"><span>Sporting CP</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/lanus.png" alt="C.A. Lanús" loading="lazy"><span>C.A. Lanús</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/sporting.png" alt="Real Sporting" loading="lazy"><span>Real Sporting</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/espanyol.png" alt="RCD Espanyol" loading="lazy"><span>RCD Espanyol</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/boca.png" alt="Boca Juniors" loading="lazy"><span>Boca Jrs</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/realmadrid.png" alt="Real Madrid" loading="lazy"><span>Real Madrid</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/getafe.png" alt="Getafe CF" loading="lazy"><span>Getafe CF</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/cadiz.png" alt="Cádiz CF" loading="lazy"><span>Cádiz CF</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/malaga.png" alt="Málaga CF" loading="lazy"><span>Málaga CF</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/huesca.png" alt="SD Huesca" loading="lazy"><span>SD Huesca</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/eibar.png" alt="SD Eibar" loading="lazy"><span>SD Eibar</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/andorra.png" alt="FC Andorra" loading="lazy"><span>FC Andorra</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/sportingcp.png" alt="Sporting CP" loading="lazy"><span>Sporting CP</span></div>
+        <div class="cf-badge"><img src="uploads/clubs/lanus.png" alt="C.A. Lanús" loading="lazy"><span>C.A. Lanús</span></div>
+      </div>
+    </div>
+    <div class="cf-marq" aria-hidden="true" style="margin-top:18px">
+      <div class="cf-track cf-rev">
+        <span class="cf-name">Duki</span><span class="cf-dot">✦</span><span class="cf-name">Cro</span><span class="cf-dot">✦</span><span class="cf-name">YSY A</span><span class="cf-dot">✦</span><span class="cf-name">El Jincho</span><span class="cf-dot">✦</span><span class="cf-name">Recycled J</span><span class="cf-dot">✦</span><span class="cf-name">Arturo Coello</span><span class="cf-dot">✦</span><span class="cf-name">Omar Montes</span><span class="cf-dot">✦</span><span class="cf-name">Davilés de Novelda</span><span class="cf-dot">✦</span><span class="cf-name">Khaled</span><span class="cf-dot">✦</span><span class="cf-name">Pablo Nezz</span><span class="cf-dot">✦</span>
+        <span class="cf-name">Duki</span><span class="cf-dot">✦</span><span class="cf-name">Cro</span><span class="cf-dot">✦</span><span class="cf-name">YSY A</span><span class="cf-dot">✦</span><span class="cf-name">El Jincho</span><span class="cf-dot">✦</span><span class="cf-name">Recycled J</span><span class="cf-dot">✦</span><span class="cf-name">Arturo Coello</span><span class="cf-dot">✦</span><span class="cf-name">Omar Montes</span><span class="cf-dot">✦</span><span class="cf-name">Davilés de Novelda</span><span class="cf-dot">✦</span><span class="cf-name">Khaled</span><span class="cf-dot">✦</span><span class="cf-name">Pablo Nezz</span><span class="cf-dot">✦</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CORTES · PARALLAX (transición) ===================== -->
+  <section id="corte-scroll" style="position:relative;width:100%;height:calc(2100px + 100vh);background:#0c0c0e">
+    <div id="cs-center" style="position:sticky;top:0;height:100vh;width:100%;background-image:url('uploads/luchybarber_media/fullres/images/DK0EQR6IG9m_1.jpg');background-position:center 28%;background-repeat:no-repeat;background-size:170%;clip-path:polygon(25% 25%, 75% 25%, 75% 75%, 25% 75%);will-change:clip-path,background-size,opacity">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.12))">
+        <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:#fff;font-size:15px;margin-bottom:10px;text-shadow:0 2px 16px rgba(0,0,0,.7)" data-en="Only haircuts">Solo cortes</div>
+        <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(44px,8vw,108px);line-height:.9;margin:0;text-transform:uppercase;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.6)" data-en="The craft of the cut">El arte del corte</h2>
+      </div>
+    </div>
+    <div style="margin:0 auto;max-width:1024px;padding:200px 16px 0;position:relative;z-index:1">
+      <img class="lb-par" data-start="-200" data-end="200" src="uploads/luchybarber_media/17_DK0EQR6IG9m_img.jpg" alt="Corte fade clásico" style="width:30%;height:280px;object-fit:cover;object-position:center 30%;display:block;border-radius:10px;box-shadow:0 24px 55px rgba(0,0,0,.55)">
+      <img class="lb-par" data-start="200" data-end="-250" src="uploads/luchybarber_media/fullres/images/DK0EQR6IG9m_4.jpg" alt="Corte con raya marcada" style="width:54%;height:360px;object-fit:cover;object-position:center 35%;margin:0 auto;display:block;border-radius:10px;box-shadow:0 24px 55px rgba(0,0,0,.55)">
+      <img class="lb-par" data-start="-200" data-end="200" src="uploads/luchybarber_media/fullres/images/CTeitZ1IMsp_poster.jpg" alt="Corte con color" style="width:30%;height:280px;object-fit:cover;object-position:center 28%;margin-left:auto;display:block;border-radius:10px;box-shadow:0 24px 55px rgba(0,0,0,.55)">
+      <img class="lb-par" data-start="0" data-end="-500" src="uploads/luchybarber_media/fullres/images/CouXF3ZIW39_poster.jpg" alt="Corte platino" style="width:38%;height:320px;object-fit:cover;object-position:center 30%;margin-left:96px;display:block;border-radius:10px;box-shadow:0 24px 55px rgba(0,0,0,.55)">
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:384px;background:linear-gradient(to bottom, rgba(12,12,14,0), #0c0c0e);pointer-events:none;z-index:1"></div>
+  </section>
+
+  <!-- ===================== HORARIO (pantalla completa) ===================== -->
+  <section id="horario" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:96px 30px;background:#0c0c0e;scroll-margin-top:70px;border-top:1px solid rgba(255,255,255,.06)">
+    <div style="max-width:1040px;margin:0 auto;width:100%">
+      <div class="reveal" style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:15px;margin-bottom:14px" data-en="Opening hours">Horario</div>
+      <h2 class="reveal" style="font-family:'Anton';font-weight:400;font-size:clamp(52px,11vw,140px);line-height:.85;margin:0 0 22px;text-transform:uppercase" data-en="When we open">Cuándo abrimos</h2>
+      <div class="reveal" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:30px;font-family:'Barlow Condensed';font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:16px;color:#1ed760"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#1ed760;animation:lb-pulse 2s ease infinite"></span><span id="lb-openbadge2">Abierto ahora</span></div>
+      <div id="lb-hours" class="reveal" style="border-top:1px solid rgba(255,255,255,.12)">
+        <div data-day="1" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 18px;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:clamp(22px,3vw,32px)" data-en="Monday">Lunes</span><span style="font-family:'Barlow Condensed';font-weight:600;color:rgba(255,255,255,.42);font-size:clamp(15px,1.9vw,21px)" data-en="Closed">Cerrado</span></div>
+        <div data-day="2" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 18px;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:clamp(22px,3vw,32px)" data-en="Tuesday">Martes</span><span style="font-family:'Barlow Condensed';font-weight:600;color:rgba(255,255,255,.8);font-size:clamp(15px,1.9vw,21px)">9:30–13:30 · 15:30–20:30</span></div>
+        <div data-day="3" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 18px;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:clamp(22px,3vw,32px)" data-en="Wednesday">Miércoles</span><span style="font-family:'Barlow Condensed';font-weight:600;color:rgba(255,255,255,.8);font-size:clamp(15px,1.9vw,21px)">9:30–13:30 · 15:30–20:30</span></div>
+        <div data-day="4" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 18px;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:clamp(22px,3vw,32px)" data-en="Thursday">Jueves</span><span style="font-family:'Barlow Condensed';font-weight:600;color:rgba(255,255,255,.8);font-size:clamp(15px,1.9vw,21px)">9:30–13:30 · 15:30–20:30</span></div>
+        <div data-day="5" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 18px;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:clamp(22px,3vw,32px)" data-en="Friday">Viernes</span><span style="font-family:'Barlow Condensed';font-weight:600;color:rgba(255,255,255,.8);font-size:clamp(15px,1.9vw,21px)">9:30–13:30 · 15:30–20:30</span></div>
+        <div data-day="6" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 18px;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:clamp(22px,3vw,32px)" data-en="Saturday">Sábado</span><span style="font-family:'Barlow Condensed';font-weight:600;color:rgba(255,255,255,.8);font-size:clamp(15px,1.9vw,21px)">9:00–13:00</span></div>
+        <div data-day="0" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 18px"><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:clamp(22px,3vw,32px)" data-en="Sunday">Domingo</span><span style="font-family:'Barlow Condensed';font-weight:600;color:rgba(255,255,255,.42);font-size:clamp(15px,1.9vw,21px)" data-en="Closed">Cerrado</span></div>
+      </div>
+      <p class="reveal" style="margin:22px 2px 0;font-family:'Space Mono';font-size:12px;color:rgba(255,255,255,.4)" data-en="Closed Sundays and Mondays · C. Ramón y Cajal 54, Gijón">Cerrado domingos y lunes · C. Ramón y Cajal 54, Gijón</p>
+    </div>
+  </section>
+
+  <!-- ===================== REELS ===================== -->
+  <section id="reels" class="lb-sec" style="scroll-margin-top:80px;padding:70px 30px;background:#0c0c0e;border-top:1px solid rgba(255,255,255,.06)">
+    <div style="max-width:1240px;margin:0 auto">
+      <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+        <div>
+          <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:10px" data-en="Video">Vídeo</div>
+          <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(34px,5vw,56px);line-height:.95;margin:0;text-transform:uppercase"><span data-en="Reels that went">Reels que se hicieron</span> <span style="color:#E4002B" data-en="viral">virales</span></h2>
+        </div>
+        <a class="lb-outbtn" href="https://www.instagram.com/luchybarber/" target="_blank" rel="noopener" style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:13px 22px;border-radius:3px;font-size:14px">@luchybarber →</a>
+      </div>
+      <p class="reveal" style="max-width:520px;margin:-12px 0 26px;color:rgba(255,255,255,.5);font-size:14px;line-height:1.55" data-en="Millions of views. Tap any reel to play it.">Millones de visualizaciones. Toca cualquier reel para reproducirlo.</p>
+      <div class="rf-fan reveal">
+        <div class="rf-card lb-reelcard" onClick="{{ openReel }}" data-code="DLPn3z0scaR" data-views="809K" data-cap="Empezamos la semana así en la barbería… 😂⚽" style="--z:8;--y:36px"><img src="uploads/luchybarber_media/fullres/images/DLPn3z0scaR_poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="rf-shade"></div><div class="lb-play rf-play">▶</div><div class="rf-views">▶ 809K</div></div>
+        <div class="rf-card lb-reelcard" onClick="{{ openReel }}" data-code="C9-P1lYsteA" data-views="570K" data-cap="Fui a hacerme el corte de De Paul y pasó esto 😳" style="--z:7;--y:16px"><img src="uploads/luchybarber_media/fullres/images/C9-P1lYsteA_poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="rf-shade"></div><div class="lb-play rf-play">▶</div><div class="rf-views">▶ 570K</div></div>
+        <div class="rf-card lb-reelcard" onClick="{{ openReel }}" data-code="C6Jqc-_IbeR" data-views="228K" data-cap="La conversación más normal de los pibes con su peluquero 🤣" style="--z:6;--y:2px"><img src="uploads/luchybarber_media/fullres/images/C6Jqc-_IbeR_poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="rf-shade"></div><div class="lb-play rf-play">▶</div><div class="rf-views">▶ 228K</div></div>
+        <div class="rf-card lb-reelcard" onClick="{{ openReel }}" data-code="C6tTRWqhW5G" data-views="66K" data-cap="Reacción de mi madre al corte de pelo 😂" style="--z:5;--y:-10px"><img src="uploads/luchybarber_media/fullres/images/C6tTRWqhW5G_poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="rf-shade"></div><div class="lb-play rf-play">▶</div><div class="rf-views">▶ 66K</div></div>
+        <div class="rf-card lb-reelcard" onClick="{{ openReel }}" data-code="C-FpVnzI7Tc" data-views="63K" data-cap="POV: tu barbero tras el corte de pelo 🙃" style="--z:4;--y:-10px"><img src="uploads/luchybarber_media/fullres/images/C-FpVnzI7Tc_poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="rf-shade"></div><div class="lb-play rf-play">▶</div><div class="rf-views">▶ 63K</div></div>
+        <div class="rf-card lb-reelcard" onClick="{{ openReel }}" data-code="DKSxB6kIc-o" data-views="58K" data-cap="Esta locura empieza ❤️ ¡Gracias a todos!" style="--z:3;--y:2px"><img src="uploads/luchybarber_media/fullres/images/DKSxB6kIc-o_poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="rf-shade"></div><div class="lb-play rf-play">▶</div><div class="rf-views">▶ 58K</div></div>
+        <div class="rf-card lb-reelcard" onClick="{{ openReel }}" data-code="DQt603tDGaj" data-views="49K" data-cap="Cuando el jugador del Sporting me pide un autógrafo ⚽" style="--z:2;--y:16px"><img src="uploads/luchybarber_media/fullres/images/DQt603tDGaj_poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="rf-shade"></div><div class="lb-play rf-play">▶</div><div class="rf-views">▶ 49K</div></div>
+        <div class="rf-card lb-reelcard" onClick="{{ openReel }}" data-code="CyDy0mloQE4" data-views="39K" data-cap="El Jincho hoy en Gijón 😈" style="--z:1;--y:36px"><img src="uploads/luchybarber_media/fullres/images/CyDy0mloQE4_poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="rf-shade"></div><div class="lb-play rf-play">▶</div><div class="rf-views">▶ 39K</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HISTORIA (timeline) ===================== -->
+  <section id="historia" style="scroll-margin-top:80px;padding:0 0 30px;background:#0c0c0e;color:#fff">
+    <div style="max-width:1240px;margin:0 auto;padding:80px 30px 6px">
+      <div class="reveal" style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:12px" data-en="Our story">Nuestra historia</div>
+      <h2 class="reveal" style="font-family:'Anton';font-weight:400;font-size:clamp(38px,6vw,72px);line-height:.92;margin:0 0 14px;text-transform:uppercase"><span data-en="From Buenos Aires">De Buenos Aires</span> <span style="color:#E4002B" data-en="to Gijón">a Gijón</span></h2>
+      <p class="reveal" style="max-width:560px;margin:0;color:rgba(255,255,255,.6);font-size:16px;line-height:1.6" data-en="The journey of Luchy and his barbershop, from day one to today.">El camino de Luchy y su barbería, desde el primer día hasta hoy.</p>
+    </div>
+    <div id="tl-track" style="position:relative;max-width:1240px;margin:0 auto;padding:10px 22px 30px">
+      <div class="tl-entry reveal" style="position:relative;display:flex;gap:clamp(14px,3vw,38px);padding-top:clamp(40px,7vw,120px)">
+        <div style="position:sticky;top:96px;align-self:flex-start;z-index:3;display:flex;align-items:center;gap:clamp(12px,2vw,22px);flex-shrink:0;width:clamp(70px,26vw,290px)"><div style="width:40px;height:40px;border-radius:50%;background:#0c0c0e;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:14px;height:14px;border-radius:50%;background:#E4002B;box-shadow:0 0 16px rgba(228,0,43,.7)"></div></div><h3 style="font-family:'Anton';font-size:clamp(22px,5vw,58px);line-height:1;color:rgba(255,255,255,.85);margin:0">2021</h3></div>
+        <div style="flex:1;min-width:0;padding-bottom:8px">
+          <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E4002B;font-size:13px;margin-bottom:10px" data-en="We open the doors">Abrimos las puertas</div>
+          <p style="margin:0 0 18px;color:rgba(255,255,255,.72);font-size:clamp(14px,1.5vw,16px);line-height:1.6;max-width:560px" data-en="On 5 April 2021 Luchy arrives from Buenos Aires and opens Luchybarber on Ramón y Cajal street. One chair, a pair of clippers and a whole lot of drive.">El 5 de abril de 2021 Luchy llega desde Buenos Aires y abre Luchybarber en la calle Ramón y Cajal. Un sillón, unas tijeras y muchas ganas.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px"><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/09_DUS-8mKjCzN_img.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/fullres/images/DVgRtn-DG9G_1.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div></div>
+        </div>
+      </div>
+      <div class="tl-entry reveal" style="position:relative;display:flex;gap:clamp(14px,3vw,38px);padding-top:clamp(40px,7vw,120px)">
+        <div style="position:sticky;top:96px;align-self:flex-start;z-index:3;display:flex;align-items:center;gap:clamp(12px,2vw,22px);flex-shrink:0;width:clamp(70px,26vw,290px)"><div style="width:40px;height:40px;border-radius:50%;background:#0c0c0e;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:14px;height:14px;border-radius:50%;background:#E4002B;box-shadow:0 0 16px rgba(228,0,43,.7)"></div></div><h3 style="font-family:'Anton';font-size:clamp(22px,5vw,58px);line-height:1;color:rgba(255,255,255,.85);margin:0">2022</h3></div>
+        <div style="flex:1;min-width:0;padding-bottom:8px">
+          <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E4002B;font-size:13px;margin-bottom:10px" data-en="Word of mouth">El boca a boca</div>
+          <p style="margin:0 0 18px;color:rgba(255,255,255,.72);font-size:clamp(14px,1.5vw,16px);line-height:1.6;max-width:560px" data-en="The first footballers arrive and Soy Barbudo magazine features Luchy. The wall starts filling up with signed jerseys.">Llegan los primeros futbolistas y la revista Soy Barbudo publica a Luchy. La pared empieza a llenarse de camisetas firmadas.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px"><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/07_DXMTLgvDBhT_img.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/fullres/images/DK0EQR6IG9m_1.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div></div>
+        </div>
+      </div>
+      <div class="tl-entry reveal" style="position:relative;display:flex;gap:clamp(14px,3vw,38px);padding-top:clamp(40px,7vw,120px)">
+        <div style="position:sticky;top:96px;align-self:flex-start;z-index:3;display:flex;align-items:center;gap:clamp(12px,2vw,22px);flex-shrink:0;width:clamp(70px,26vw,290px)"><div style="width:40px;height:40px;border-radius:50%;background:#0c0c0e;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:14px;height:14px;border-radius:50%;background:#E4002B;box-shadow:0 0 16px rgba(228,0,43,.7)"></div></div><h3 style="font-family:'Anton';font-size:clamp(22px,5vw,58px);line-height:1;color:rgba(255,255,255,.85);margin:0">2023</h3></div>
+        <div style="flex:1;min-width:0;padding-bottom:8px">
+          <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E4002B;font-size:13px;margin-bottom:10px" data-en="Music in the chair">Música en el sillón</div>
+          <p style="margin:0 0 18px;color:rgba(255,255,255,.72);font-size:clamp(14px,1.5vw,16px);line-height:1.6;max-width:560px" data-en="YSY A, El Jincho, Recycled J… the artists passing through Gijón get their cut with Luchy. Festivals like Riverland and Boombastic.">YSY A, El Jincho, Recycled J… los artistas que pasan por Gijón se cortan con Luchy. Festivales como Riverland y Boombastic.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px"><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/19_Cu5FlRno01W_img.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/18_CyDy0mloQE4_img.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div></div>
+        </div>
+      </div>
+      <div class="tl-entry reveal" style="position:relative;display:flex;gap:clamp(14px,3vw,38px);padding-top:clamp(40px,7vw,120px)">
+        <div style="position:sticky;top:96px;align-self:flex-start;z-index:3;display:flex;align-items:center;gap:clamp(12px,2vw,22px);flex-shrink:0;width:clamp(70px,26vw,290px)"><div style="width:40px;height:40px;border-radius:50%;background:#0c0c0e;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:14px;height:14px;border-radius:50%;background:#E4002B;box-shadow:0 0 16px rgba(228,0,43,.7)"></div></div><h3 style="font-family:'Anton';font-size:clamp(22px,5vw,58px);line-height:1;color:rgba(255,255,255,.85);margin:0">2024</h3></div>
+        <div style="flex:1;min-width:0;padding-bottom:8px">
+          <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E4002B;font-size:13px;margin-bottom:10px" data-en="More than a barbershop">Más que una barbería</div>
+          <p style="margin:0 0 18px;color:rgba(255,255,255,.72);font-size:clamp(14px,1.5vw,16px);line-height:1.6;max-width:560px" data-en="Diode laser hair removal arrives with Bárbara Mulero, plus the VIP home service. The team grows with David and Viti.">Llega la depilación láser con Bárbara Mulero y el servicio VIP a domicilio. El equipo crece con David y Viti.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px"><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/fullres/images/CTeitZ1IMsp_poster.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/fullres/images/CouXF3ZIW39_poster.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div></div>
+        </div>
+      </div>
+      <div class="tl-entry reveal" style="position:relative;display:flex;gap:clamp(14px,3vw,38px);padding-top:clamp(40px,7vw,120px)">
+        <div style="position:sticky;top:96px;align-self:flex-start;z-index:3;display:flex;align-items:center;gap:clamp(12px,2vw,22px);flex-shrink:0;width:clamp(70px,26vw,290px)"><div style="width:40px;height:40px;border-radius:50%;background:#0c0c0e;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:14px;height:14px;border-radius:50%;background:#E4002B;box-shadow:0 0 16px rgba(228,0,43,.7)"></div></div><h3 style="font-family:'Anton';font-size:clamp(22px,5vw,58px);line-height:1;color:rgba(255,255,255,.85);margin:0">2025</h3></div>
+        <div style="flex:1;min-width:0;padding-bottom:8px">
+          <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E4002B;font-size:13px;margin-bottom:10px" data-en="We make the news">Somos noticia</div>
+          <p style="margin:0 0 18px;color:rgba(255,255,255,.72);font-size:clamp(14px,1.5vw,16px);line-height:1.6;max-width:560px" data-en="La Nueva España interviews Luchy and a reel goes past 800,000 views. Luchybarber is now the reference in Gijón.">La Nueva España entrevista a Luchy y un reel supera las 800.000 visitas. Luchybarber es ya la referencia de Gijón.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px"><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/10_DRFRrJAjMEX_img.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/fullres/images/DLPn3z0scaR_poster.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div></div>
+        </div>
+      </div>
+      <div class="tl-entry reveal" style="position:relative;display:flex;gap:clamp(14px,3vw,38px);padding-top:clamp(40px,7vw,120px)">
+        <div style="position:sticky;top:96px;align-self:flex-start;z-index:3;display:flex;align-items:center;gap:clamp(12px,2vw,22px);flex-shrink:0;width:clamp(70px,26vw,290px)"><div style="width:40px;height:40px;border-radius:50%;background:#E4002B;border:1px solid rgba(228,0,43,.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 22px rgba(228,0,43,.55)"><div style="width:14px;height:14px;border-radius:50%;background:#fff"></div></div><h3 style="font-family:'Anton';font-size:clamp(22px,5vw,58px);line-height:1;color:#fff;margin:0" data-en="Today">Hoy</h3></div>
+        <div style="flex:1;min-width:0;padding-bottom:8px">
+          <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E4002B;font-size:13px;margin-bottom:10px" data-en="The barber of the crest">El barber del escudo</div>
+          <p style="margin:0 0 18px;color:rgba(255,255,255,.72);font-size:clamp(14px,1.5vw,16px);line-height:1.6;max-width:560px" data-en="4.8 stars, 90+ cracks cut and Real Sporting players trusting us every week. The key, as Luchy says, is that they feel at home. And the best is yet to come.">4,8★, +90 cracks cortados y los jugadores del Real Sporting confiando cada semana. La clave, como dice Luchy, es que se sientan cómodos. Y lo mejor, por venir.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px"><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/01_DaNf7RDjJk_img.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div><div class="lb-imgz-wrap" style="border-radius:10px;overflow:hidden"><img class="lb-imgz" src="uploads/luchybarber_media/03_DZaAK47jAD3_img.jpg" style="width:100%;height:clamp(120px,17vw,210px);object-fit:cover;display:block"></div></div>
+        </div>
+      </div>
+      <div id="tl-line" style="position:absolute;left:41px;top:40px;bottom:60px;width:2px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.14) 12%,rgba(255,255,255,.14) 88%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 10%,#000 90%,transparent)"><div id="tl-fill" style="position:absolute;left:0;top:0;width:2px;height:0;background:linear-gradient(to top,#E4002B,#7fd4ff);border-radius:2px;opacity:0"></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== EQUIPO ===================== -->
+  <section id="equipo" class="lb-sec" style="scroll-margin-top:80px;padding:72px 30px;background:#0c0c0e">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal" style="text-align:center;margin-bottom:40px">
+        <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:10px" data-en="The team">El equipo</div>
+        <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(38px,5.5vw,60px);line-height:.95;margin:0;text-transform:uppercase" data-en="The crew behind the chair">La cuadrilla del sillón</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px">
+        <div class="lb-card-hover reveal" style="background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;text-align:center"><div style="aspect-ratio:1/1;background:radial-gradient(circle at 50% 35%,#2a2a2e,#0f0f11);display:flex;align-items:center;justify-content:center;position:relative"><span style="font-family:'Anton';font-size:90px;color:#E4002B;opacity:.9">L</span><span style="position:absolute;bottom:12px;font-family:'Space Mono';font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.35)" data-en="photo coming soon">foto próximamente</span></div><div style="padding:18px 16px 22px"><h3 style="font-family:'Barlow Condensed';font-weight:700;font-size:24px;letter-spacing:.04em;text-transform:uppercase;margin:0">Luchy</h3><div style="color:#E4002B;font-family:'Barlow Condensed';font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:12px;margin-top:3px" data-en="Founder & Barber">Fundador & Barber</div><div style="font-family:'Space Mono';font-size:12px;color:rgba(255,255,255,.45);margin-top:8px">@luchybarber</div></div></div>
+        <div class="lb-card-hover reveal" style="background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;text-align:center"><div style="aspect-ratio:1/1;background:radial-gradient(circle at 50% 35%,#2a2a2e,#0f0f11);display:flex;align-items:center;justify-content:center;position:relative"><span style="font-family:'Anton';font-size:90px;color:#E4002B;opacity:.9">D</span><span style="position:absolute;bottom:12px;font-family:'Space Mono';font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.35)" data-en="photo coming soon">foto próximamente</span></div><div style="padding:18px 16px 22px"><h3 style="font-family:'Barlow Condensed';font-weight:700;font-size:24px;letter-spacing:.04em;text-transform:uppercase;margin:0">David</h3><div style="color:#E4002B;font-family:'Barlow Condensed';font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:12px;margin-top:3px">Barber</div><div style="font-family:'Space Mono';font-size:12px;color:rgba(255,255,255,.45);margin-top:8px">@__davidcutzz</div></div></div>
+        <div class="lb-card-hover reveal" style="background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;text-align:center"><div style="aspect-ratio:1/1;background:radial-gradient(circle at 50% 35%,#2a2a2e,#0f0f11);display:flex;align-items:center;justify-content:center;position:relative"><span style="font-family:'Anton';font-size:90px;color:#E4002B;opacity:.9">V</span><span style="position:absolute;bottom:12px;font-family:'Space Mono';font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.35)" data-en="photo coming soon">foto próximamente</span></div><div style="padding:18px 16px 22px"><h3 style="font-family:'Barlow Condensed';font-weight:700;font-size:24px;letter-spacing:.04em;text-transform:uppercase;margin:0">Viti</h3><div style="color:#E4002B;font-family:'Barlow Condensed';font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:12px;margin-top:3px">Barber</div><div style="font-family:'Space Mono';font-size:12px;color:rgba(255,255,255,.45);margin-top:8px">@_viti.barber</div></div></div>
+      </div>
+      <p class="reveal" style="text-align:center;margin:22px 0 0;font-family:'Space Mono';font-size:12px;color:rgba(255,255,255,.4)" data-en="// Send me the team photos and names and I'll drop them in">// Pásame las fotos y nombres del equipo y los coloco</p>
+    </div>
+  </section>
+
+  <!-- ===================== PRENSA (La Nueva España) ===================== -->
+  <section id="prensa" class="lb-sec" style="padding:72px 30px;background:#0c0c0e;border-top:1px solid rgba(255,255,255,.06)">
+    <div class="reveal" style="max-width:940px;margin:0 auto;text-align:center">
+      <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:18px" data-en="In the press">En los medios</div>
+      <div class="lb-press-logo">La Nueva España</div>
+      <blockquote class="lb-quote">“<span data-en="We're in the news">Somos noticia</span>”</blockquote>
+      <p style="max-width:620px;margin:20px auto 0;color:rgba(255,255,255,.62);font-size:17px;line-height:1.6" data-en="La Nueva España interviewed us about how it all started. And, as always… it ended up being about football.">La Nueva España nos hizo una entrevista sobre cómo empezó todo. Y, como siempre… acabó saliendo el fútbol.</p>
+      <div style="margin-top:16px;font-family:'Space Mono';font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4)" data-en="— Interview · La Nueva España, 2025">— Entrevista · La Nueva España, 2025</div>
+    </div>
+  </section>
+
+  <!-- ===================== RESEÑAS (Google · stack) ===================== -->
+  <section id="resenas" class="lb-sec" style="scroll-margin-top:80px;padding:78px 30px;background:#f4f1ea;color:#14110f">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="g-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></symbol></svg>
+    <div class="rv-grid">
+      <!-- Columna izquierda (sticky) -->
+      <div class="rv-left reveal">
+        <div class="rv-tag"><span class="rv-dot"></span> <span data-en="Real Google reviews">Reseñas reales de Google</span></div>
+        <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(36px,5vw,58px);line-height:.95;margin:20px 0 0;text-transform:uppercase;color:#14110f" data-en="Gijón is talking">Gijón habla</h2>
+        <p style="max-width:400px;margin:16px 0 0;color:#6b6259;font-size:17px;line-height:1.6" data-en="156+ reviews on Google, 4.8 average. These are real — word for word, no filters.">Más de 156 reseñas en Google, 4,8 de media. Estas son reales, palabra por palabra — sin filtros.</p>
+        <div class="rv-stats">
+          <div class="rv-stat"><b>4,8</b><span data-en="Google avg.">Media Google</span></div>
+          <div class="rv-stat"><b>156</b><span data-en="Reviews">Reseñas</span></div>
+          <div class="rv-stat"><b>140</b><span data-en="5-star">De 5★</span></div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
+          <a class="lb-outbtn" href="https://www.google.com/maps/search/Luchybarber+Gij%C3%B3n" target="_blank" rel="noopener" style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid rgba(0,0,0,.25);color:#14110f;padding:14px 22px;border-radius:30px;font-size:14px" data-en="See all on Google">Ver todas en Google</a>
+          <a class="lb-redbtn" data-book href="#reservar" target="_blank" rel="noopener" style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#E4002B;color:#fff;padding:14px 24px;border-radius:30px;font-size:14px" data-en="Book now">Reservar</a>
+        </div>
+      </div>
+      <!-- Columna derecha: pila de reseñas (sticky stacking) -->
+      <div class="rv-stack">
+        <div class="rv-card" style="top:84px"><div class="rv-head"><div class="rv-ava" style="background:#E4002B">CM</div><div class="rv-who"><div class="rv-name">Carlos Martínez</div><div class="rv-sub">Google · hace 8 meses</div></div><svg class="rv-g" viewBox="0 0 48 48"><use href="#g-icon"/></svg></div><div class="rv-stars">★★★★★</div><p class="rv-quote">“¡La mejor barbería de Gijón, sin duda! El trato es de diez, muy profesionales y el resultado siempre perfecto. Además, el precio de corte y barba es baratísimo para la calidad que ofrecen. 100% recomendable.”</p></div>
+        <div class="rv-card" style="top:102px"><div class="rv-head"><div class="rv-ava" style="background:#1b6b3a">AR</div><div class="rv-who"><div class="rv-name">Adrián Rodríguez</div><div class="rv-sub">Google · Local Guide</div></div><svg class="rv-g" viewBox="0 0 48 48"><use href="#g-icon"/></svg></div><div class="rv-stars">★★★★★</div><p class="rv-quote">“Se respira buen ambiente. Nada más entrar te encuentras el billar y la nevera para tomar algo gratis mientras esperas. Además es la peluquería oficial del Real Sporting. La mejor barbería de Gijón.”</p></div>
+        <div class="rv-card" style="top:120px"><div class="rv-head"><div class="rv-ava" style="background:#2b4a7a">DA</div><div class="rv-who"><div class="rv-name">David Alonso</div><div class="rv-sub">Google · hace un año</div></div><svg class="rv-g" viewBox="0 0 48 48"><use href="#g-icon"/></svg></div><div class="rv-stars">★★★★★</div><p class="rv-quote">“Si tienes dudas de dónde cortarte el pelo en Gijón, este es tu sitio. Ambiente súper agradable con barberos muy profesionales y carismáticos. Mi lugar de confianza.”</p></div>
+        <div class="rv-card" style="top:138px"><div class="rv-head"><div class="rv-ava" style="background:#8a2b5e">RB</div><div class="rv-who"><div class="rv-name">Rocío Bruno</div><div class="rv-sub">Google · hace 9 meses</div></div><svg class="rv-g" viewBox="0 0 48 48"><use href="#g-icon"/></svg></div><div class="rv-stars">★★★★★</div><p class="rv-quote">“Quiero destacar el profesionalismo de Luciano, además del buen trato que tiene. Mi pareja y mi hijo quedaron muy contentos, volverán seguro. Lo recomiendo 100%.”</p></div>
+        <div class="rv-card" style="top:156px"><div class="rv-head"><div class="rv-ava" style="background:#14110f">KS</div><div class="rv-who"><div class="rv-name">Kevin Santos</div><div class="rv-sub">Google · hace 4 años</div></div><svg class="rv-g" viewBox="0 0 48 48"><use href="#g-icon"/></svg></div><div class="rv-stars">★★★★★</div><p class="rv-quote">“La mejor peluquería sin duda de todo Gijón. Luchy lleva siendo mi peluquero de confianza desde hace más de 4 años. Profesionales 100%, calidad-precio y trato cercano.”</p></div>
+        <div class="rv-card" style="top:174px"><div class="rv-head"><div class="rv-ava" style="background:#a5561b">SA</div><div class="rv-who"><div class="rv-name">Sergio Álvarez</div><div class="rv-sub">Google · hace 4 años</div></div><svg class="rv-g" viewBox="0 0 48 48"><use href="#g-icon"/></svg></div><div class="rv-stars">★★★★★</div><p class="rv-quote">“Personal profesional y atentísimo. Local impecable, limpio y moderno. Trato cercano, música y te dan para tomar algo mientras esperas. De las mejores de Gijón con mucha diferencia.”</p></div>
+        <div class="rv-card" style="top:192px"><div class="rv-head"><div class="rv-ava" style="background:#b8860b">EA</div><div class="rv-who"><div class="rv-name">Edu Álvarez</div><div class="rv-sub">Google · hace 2 meses</div></div><svg class="rv-g" viewBox="0 0 48 48"><use href="#g-icon"/></svg></div><div class="rv-stars">★★★★★</div><p class="rv-quote">“Mi peluquería desde hace ya 5 años. Increíble su forma de trabajar y el trato cercano que tiene contigo. Recomiendo 100%.”</p></div>
+        <div class="rv-card" style="top:210px"><div class="rv-head"><div class="rv-ava" style="background:#E4002B">DC</div><div class="rv-who"><div class="rv-name">David Costales</div><div class="rv-sub">Google · hace una semana</div></div><svg class="rv-g" viewBox="0 0 48 48"><use href="#g-icon"/></svg></div><div class="rv-stars">★★★★★</div><p class="rv-quote">“La mejor peluquería que hay en Gijón, sin duda alguna. ¡FENÓMENOS!”</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== UBICACIÓN ===================== -->
+  <section id="ubicacion" class="lb-sec" style="scroll-margin-top:80px;padding:72px 30px;background:#0c0c0e">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px">
+        <div>
+          <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:10px" data-en="Find us">Cómo llegar</div>
+          <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(34px,5vw,54px);line-height:.95;margin:0;text-transform:uppercase" data-en="In the heart of Gijón">En pleno Gijón</h2>
+        </div>
+        <a class="lb-redbtn" href="https://www.google.com/maps/place/Luchybarber/@43.5320441,-5.6544218,17z" target="_blank" rel="noopener" style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:#E4002B;color:#fff;padding:13px 22px;border-radius:3px;font-size:14px;white-space:nowrap" data-en="Open in Maps →">Abrir en Maps →</a>
+      </div>
+      <div class="reveal" style="position:relative;height:clamp(320px,46vh,520px);border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#1a1a1d">
+        <iframe title="Mapa Luchybarber" src="https://www.google.com/maps?q=C.%20Ram%C3%B3n%20y%20Cajal%2054%2C%2033204%20Gij%C3%B3n&output=embed" style="position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.25) contrast(1.05)" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="reveal" style="margin-top:16px;background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <div>
+          <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:18px">C. Ramón y Cajal, 54</div>
+          <div style="color:rgba(255,255,255,.55);font-size:14px;margin-top:2px">33204 · Gijón-Este, Asturias</div>
+        </div>
+        <a class="lb-link" href="tel:+34985024519" style="font-family:'Space Mono';font-size:16px;color:#E4002B">985 02 45 19</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESERVAR (CTA) ===================== -->
+  <section id="reservar" class="lb-sec" style="scroll-margin-top:80px;padding:70px 30px;background:#E4002B;color:#fff;position:relative;overflow:hidden">
+    <div style="position:absolute;right:-40px;top:-30px;font-family:'Anton';font-size:240px;color:rgba(255,255,255,.07);line-height:.8;pointer-events:none;user-select:none">✄</div>
+    <div class="reveal" style="max-width:1000px;margin:0 auto;text-align:center;position:relative">
+      <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;font-size:14px;margin-bottom:14px;color:rgba(255,255,255,.85)" data-en="Your turn">Te toca</div>
+      <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(40px,6.5vw,76px);line-height:.92;margin:0;text-transform:uppercase" data-en="Book your cut">Reserva tu cita</h2>
+      <p style="max-width:520px;margin:18px auto 0;font-size:17px;line-height:1.5;color:rgba(255,255,255,.88)" data-en="Pick your time online or give us a call. We'll be waiting at the chair.">Elige tu hora online o llámanos. Te esperamos en el sillón.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:30px">
+        <a id="lb-bookbtn" class="lb-darkbtn" href="#" target="_blank" rel="noopener" style="font-family:'Barlow Condensed';font-weight:700;font-size:17px;letter-spacing:.1em;text-transform:uppercase;background:#0c0c0e;color:#fff;padding:17px 32px;border-radius:3px" data-en="Book online">Reservar online</a>
+        <a class="lb-outbtn" href="tel:+34985024519" style="font-family:'Barlow Condensed';font-weight:700;font-size:17px;letter-spacing:.1em;text-transform:uppercase;border:1.5px solid rgba(255,255,255,.6);color:#fff;padding:17px 32px;border-radius:3px">Llamar · 985 02 45 19</a>
+      </div>
+      <p style="margin:18px 0 0;font-family:'Space Mono';font-size:12px;color:rgba(255,255,255,.7)" data-en="// Send me your Booksy/Fresha/Treatwell link and I'll wire up the button">// Pásame tu enlace de Booksy/Fresha/Treatwell y conecto el botón</p>
+    </div>
+  </section>
+
+  <!-- ===================== INSTAGRAM FEED ===================== -->
+  <section id="instagram" class="lb-sec" style="scroll-margin-top:80px;padding:70px 30px 60px;background:#0c0c0e">
+    <div style="max-width:1240px;margin:0 auto">
+      <div class="reveal" style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px">
+        <div>
+          <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:8px">Instagram</div>
+          <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(30px,4.5vw,50px);line-height:.95;margin:0;text-transform:uppercase">@luchybarber</h2>
+        </div>
+        <a class="lb-redbtn" href="https://www.instagram.com/luchybarber/" target="_blank" rel="noopener" style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:#E4002B;color:#fff;padding:13px 24px;border-radius:3px;font-size:14px" data-en="Follow">Seguir</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">
+        <a class="lb-imgz-wrap" href="https://www.instagram.com/p/DaNf7RDjJk-/" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:6px;overflow:hidden;display:block"><img class="lb-imgz" src="uploads/luchybarber_media/01_DaNf7RDjJk_img.jpg" style="width:100%;height:100%;object-fit:cover"></a>
+        <a class="lb-imgz-wrap" href="https://www.instagram.com/p/DVgRtn-DG9G/" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:6px;overflow:hidden;display:block"><img class="lb-imgz" src="uploads/luchybarber_media/08_DVgRtn-DG9G_img.jpg" style="width:100%;height:100%;object-fit:cover"></a>
+        <a class="lb-imgz-wrap" href="https://www.instagram.com/p/CgNSPsFIIZd/" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:6px;overflow:hidden;display:block"><img class="lb-imgz" src="uploads/luchybarber_media/20_CgNSPsFIIZd_img.jpg" style="width:100%;height:100%;object-fit:cover"></a>
+        <a class="lb-imgz-wrap" href="https://www.instagram.com/p/DK0EQR6IG9m/" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:6px;overflow:hidden;display:block"><img class="lb-imgz" src="uploads/luchybarber_media/17_DK0EQR6IG9m_img.jpg" style="width:100%;height:100%;object-fit:cover"></a>
+        <a class="lb-imgz-wrap" href="https://www.instagram.com/p/Cu5FlRno01W/" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:6px;overflow:hidden;display:block"><img class="lb-imgz" src="uploads/luchybarber_media/19_Cu5FlRno01W_img.jpg" style="width:100%;height:100%;object-fit:cover"></a>
+        <a class="lb-imgz-wrap" href="https://www.instagram.com/p/DLkKfFdIsup/" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:6px;overflow:hidden;display:block"><img class="lb-imgz" src="uploads/luchybarber_media/15_DLkKfFdIsup_img.jpg" style="width:100%;height:100%;object-fit:cover"></a>
+        <a class="lb-imgz-wrap" href="https://www.instagram.com/p/DOOCw0GjFZW/" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:6px;overflow:hidden;display:block"><img class="lb-imgz" src="uploads/luchybarber_media/13_DOOCw0GjFZW_img.jpg" style="width:100%;height:100%;object-fit:cover"></a>
+        <a class="lb-imgz-wrap" href="https://www.instagram.com/p/DRFRrJAjMEX/" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:6px;overflow:hidden;display:block"><img class="lb-imgz" src="uploads/luchybarber_media/10_DRFRrJAjMEX_img.jpg" style="width:100%;height:100%;object-fit:cover"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq" class="lb-sec" style="scroll-margin-top:80px;padding:66px 30px;background:#0c0c0e;border-top:1px solid rgba(255,255,255,.06)">
+    <div style="max-width:860px;margin:0 auto">
+      <div class="reveal" style="text-align:center;margin-bottom:36px">
+        <div style="font-family:'Barlow Condensed';font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#E4002B;font-size:14px;margin-bottom:10px">FAQ</div>
+        <h2 style="font-family:'Anton';font-weight:400;font-size:clamp(32px,4.5vw,52px);line-height:.95;margin:0;text-transform:uppercase" data-en="Frequent questions">Preguntas frecuentes</h2>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:10px">
+        <div data-faq data-open="0" style="background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden"><button onClick="{{ toggleFaq }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 22px;text-align:left;color:#fff"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:19px;letter-spacing:.03em;text-transform:uppercase" data-en="Do I need an appointment?">¿Necesito reservar cita?</span><span class="lb-faq-ic" style="font-family:'Anton';color:#E4002B;font-size:22px;line-height:1">+</span></button><div class="lb-faq-a"><p style="margin:0;padding:0 22px 20px;color:rgba(255,255,255,.6);font-size:15px;line-height:1.6" data-en="Recommended. Book online or call us; we also take walk-ins subject to availability.">Recomendado. Reserva online o llámanos; también atendemos sin cita según disponibilidad.</p></div></div>
+        <div data-faq data-open="0" style="background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden"><button onClick="{{ toggleFaq }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 22px;text-align:left;color:#fff"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:19px;letter-spacing:.03em;text-transform:uppercase" data-en="How much is a haircut?">¿Cuánto cuesta un corte?</span><span class="lb-faq-ic" style="font-family:'Anton';color:#E4002B;font-size:22px;line-height:1">+</span></button><div class="lb-faq-a"><p style="margin:0;padding:0 22px 20px;color:rgba(255,255,255,.6);font-size:15px;line-height:1.6" data-en="From €14. Check the services list; prices are indicative.">Desde 14€. Consulta la lista de servicios; los precios son orientativos.</p></div></div>
+        <div data-faq data-open="0" style="background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden"><button onClick="{{ toggleFaq }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 22px;text-align:left;color:#fff"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:19px;letter-spacing:.03em;text-transform:uppercase" data-en="Do you do designs and color?">¿Hacéis diseños y color?</span><span class="lb-faq-ic" style="font-family:'Anton';color:#E4002B;font-size:22px;line-height:1">+</span></button><div class="lb-faq-a"><p style="margin:0;padding:0 22px 20px;color:rgba(255,255,255,.6);font-size:15px;line-height:1.6" data-en="Yes: fades, freestyle designs, bleaching and color. Just ask.">Sí: fades, diseños freestyle, decoloraciones y color. Consúltanos.</p></div></div>
+        <div data-faq data-open="0" style="background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden"><button onClick="{{ toggleFaq }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 22px;text-align:left;color:#fff"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:19px;letter-spacing:.03em;text-transform:uppercase" data-en="Do you offer home / VIP service?">¿Tenéis servicio a domicilio / VIP?</span><span class="lb-faq-ic" style="font-family:'Anton';color:#E4002B;font-size:22px;line-height:1">+</span></button><div class="lb-faq-a"><p style="margin:0;padding:0 22px 20px;color:rgba(255,255,255,.6);font-size:15px;line-height:1.6" data-en="Yes, we go to hotels and homes. Ask us for the VIP service.">Sí, vamos a hoteles y domicilios. Pregúntanos por el servicio VIP.</p></div></div>
+        <div data-faq data-open="0" style="background:#151517;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden"><button onClick="{{ toggleFaq }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 22px;text-align:left;color:#fff"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:19px;letter-spacing:.03em;text-transform:uppercase" data-en="Payment methods?">¿Formas de pago?</span><span class="lb-faq-ic" style="font-family:'Anton';color:#E4002B;font-size:22px;line-height:1">+</span></button><div class="lb-faq-a"><p style="margin:0;padding:0 22px 20px;color:rgba(255,255,255,.6);font-size:15px;line-height:1.6" data-en="Cash and card.">Efectivo y tarjeta.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer id="contacto" style="scroll-margin-top:80px;background:#08080a;border-top:1px solid rgba(255,255,255,.08);padding:54px 30px 30px">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px">
+      <div>
+        <div style="font-family:'Anton';font-size:30px;line-height:1;margin-bottom:14px"><span style="color:#fff">LUCHY</span><span style="color:#E4002B">BARBER</span></div>
+        <p style="margin:0;color:rgba(255,255,255,.5);font-size:14px;line-height:1.6;max-width:300px" data-en="The reference barbershop in Gijón. Cuts seen on the pitch, on stage and on your block.">La barbería de referencia de Gijón. Cortes que se ven en el campo, en los escenarios y en tu barrio.</p>
+        <div style="display:flex;gap:12px;margin-top:18px">
+          <a class="lb-link" href="https://www.instagram.com/luchybarber/" target="_blank" rel="noopener" style="width:42px;height:42px;border:1px solid rgba(255,255,255,.16);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-family:'Barlow Condensed';font-weight:700;font-size:12px;letter-spacing:.06em">IG</a>
+          <a class="lb-link" href="tel:+34985024519" style="width:42px;height:42px;border:1px solid rgba(255,255,255,.16);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:16px">✆</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:#E4002B;margin-bottom:14px" data-en="Explore">Explora</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px;color:rgba(255,255,255,.6)">
+          <a class="lb-link" href="#servicios" data-en="Services">Servicios</a>
+          <a class="lb-link" href="#fama" data-en="Wall of fame">Muro de fama</a>
+          <a class="lb-link" href="#reels" data-en="Reels">Reels</a>
+          <a class="lb-link" href="#reservar" data-en="Book">Reservar</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:#E4002B;margin-bottom:14px" data-en="Visit us">Visítanos</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7">
+          <div>C. Ramón y Cajal, 54</div>
+          <div>33204 · Gijón, Asturias</div>
+          <a class="lb-link" href="tel:+34985024519" style="color:#E4002B;display:inline-block;margin-top:6px;font-family:'Space Mono'">985 02 45 19</a>
+          <div style="margin-top:10px;font-size:13px"><span data-en="Tue–Fri">Mar–Vie</span> 9:30–13:30 · 15:30–20:30</div>
+          <div style="font-size:13px"><span data-en="Sat">Sáb</span> 9:00–13:00 · <span data-en="Sun & Mon closed">Dom y Lun cerrado</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1240px;margin:34px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:'Space Mono';font-size:11px;color:rgba(255,255,255,.35)">
+      <span>© 2026 Luchybarber · Gijón, Asturias</span>
+      <span data-en="Made with passion in Gijón">Hecho con pasión en Gijón</span>
+    </div>
+  </footer>
+
+  <!-- ===================== REEL LIGHTBOX ===================== -->
+  <div id="lb-reelmodal" style="display:none;position:fixed;inset:0;z-index:80;background:rgba(6,6,8,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px">
+    <button onClick="{{ closeReel }}" style="position:absolute;top:20px;right:24px;color:#fff;font-size:30px;font-family:'Space Mono';z-index:2">✕</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;max-height:100%;width:min(360px,92vw)">
+      <div style="position:relative;width:100%;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 30px 70px rgba(0,0,0,.6)">
+        <img id="lb-reel-poster" alt="" style="width:100%;height:100%;object-fit:cover">
+        <video id="lb-reel-video" playsinline controls style="display:none;width:100%;height:100%;object-fit:cover;background:#000"></video>
+        <button id="lb-reel-play" class="lb-play" onClick="{{ playReel }}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;color:#0c0c0e;font-size:26px;padding-left:5px">▶</button>
+        <div id="lb-reel-views" style="position:absolute;left:14px;top:14px;font-family:'Barlow Condensed';font-weight:700;font-size:13px;letter-spacing:.06em;background:rgba(0,0,0,.55);padding:6px 12px;border-radius:30px;color:#fff"></div>
+      </div>
+      <p id="lb-reel-cap" style="margin:0;color:rgba(255,255,255,.8);font-size:14px;line-height:1.5;text-align:center;max-width:340px"></p>
+      <a id="lb-reel-ig" href="#" target="_blank" rel="noopener" class="lb-redbtn" style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:#E4002B;color:#fff;padding:12px 24px;border-radius:3px;font-size:14px" data-en="Watch on Instagram">Ver en Instagram</a>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const site = document.getElementById('lb-site');
+    if (site) site.classList.add('lb-js');
+    // === Enlace de reserva (WhatsApp) =======================================
+    // Todos los botones de reserva abren un WhatsApp al 985 02 45 19 con un
+    // mensaje ya escrito. Cambia el número (formato internacional, sin +) o el
+    // texto aquí y se actualizan todos a la vez.
+    const WHATSAPP_URL = 'https://wa.me/34985024519?text=' + encodeURIComponent('¡Hola! Me gustaría reservar una cita en Luchy Barber ✂️');
+    document.querySelectorAll('[data-book], #lb-bookbtn').forEach((a) => {
+      a.setAttribute('href', WHATSAPP_URL);
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener');
+    });
+    // scroll reveal
+    try {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+      document.querySelectorAll('.reveal').forEach((el) => obs.observe(el));
+    } catch (e) {}
+    // safety: reveal everything after a moment regardless
+    setTimeout(() => document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in')), 1800);
+    // nav background on scroll + cuts parallax (SpaceX-style transition)
+    const nav = document.getElementById('lb-nav');
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const mapr = (v, a, b, c, d) => c + (d - c) * ((v - a) / (b - a));
+    const cs = document.getElementById('corte-scroll');
+    const center = document.getElementById('cs-center');
+    const pars = Array.prototype.slice.call(document.querySelectorAll('#corte-scroll .lb-par'));
+    const updatePar = () => {
+      if (cs && center) {
+        const local = (window.scrollY || 0) - cs.offsetTop;
+        const SH = 1500;
+        const c1 = clamp(mapr(local, 0, SH, 25, 0), 0, 25);
+        const c2 = clamp(mapr(local, 0, SH, 75, 100), 75, 100);
+        center.style.clipPath = 'polygon(' + c1 + '% ' + c1 + '%, ' + c2 + '% ' + c1 + '%, ' + c2 + '% ' + c2 + '%, ' + c1 + '% ' + c2 + '%)';
+        center.style.backgroundSize = clamp(mapr(local, 0, SH + 500, 170, 100), 100, 170) + '%';
+        center.style.opacity = clamp(mapr(local, SH, SH + 500, 1, 0), 0, 1);
+      }
+      const vh = window.innerHeight;
+      pars.forEach((img) => {
+        const s = +img.getAttribute('data-start'), e = +img.getAttribute('data-end');
+        const r = img.getBoundingClientRect();
+        const p = clamp((vh - r.top) / (vh + r.height), 0, 1);
+        const y = s + (e - s) * p;
+        const fade = p > 0.85 ? clamp(mapr(p, 0.85, 1, 1, 0), 0, 1) : 1;
+        const sc = p > 0.85 ? mapr(p, 0.85, 1, 1, 0.85) : 1;
+        img.style.transform = 'translateY(' + y + 'px) scale(' + sc + ')';
+        img.style.opacity = fade;
+      });
+    };
+    // timeline fill (history)
+    const tlTrack = document.getElementById('tl-track');
+    const tlFill = document.getElementById('tl-fill');
+    const updateTl = () => {
+      if (!tlTrack || !tlFill) return;
+      const rect = tlTrack.getBoundingClientRect();
+      const p = clamp((window.innerHeight * 0.6 - rect.top) / rect.height, 0, 1);
+      tlFill.style.height = (p * rect.height) + 'px';
+      tlFill.style.opacity = clamp(p / 0.04, 0, 1);
+    };
+    // famosos 3D parallax wall — spring-smoothed to mirror Framer Motion's useSpring feel
+    const fpRoot = document.getElementById('fp-root');
+    const fpGroup = document.getElementById('fp-group');
+    const fpRows = Array.prototype.slice.call(document.querySelectorAll('#fp-root .fp-row'));
+    const fpTarget = () => {
+      if (!fpRoot) return 0;
+      const rect = fpRoot.getBoundingClientRect();
+      return clamp(-rect.top / fpRoot.offsetHeight, 0, 1);
+    };
+    const fpRender = (prog) => {
+      if (!fpGroup) return;
+      const p2 = clamp(prog / 0.18, 0, 1);
+      fpGroup.style.transform = 'rotateX(' + (15 * (1 - p2)) + 'deg) rotateZ(' + (15 * (1 - p2)) + 'deg) translateY(' + (-150 + 250 * p2) + 'px)';
+      fpGroup.style.opacity = 0.4 + 0.6 * p2;
+      const txMax = Math.min(1000, window.innerWidth * 0.72);
+      fpRows.forEach((row) => {
+        row.style.transform = 'translateX(' + (prog * txMax * (+row.getAttribute('data-dir'))) + 'px)';
+      });
+    };
+    // spring integrator (stiffness/damping chosen for a smooth, lightly-damped follow)
+    let fpCur = fpTarget(), fpVel = 0, fpRunning = false;
+    const FP_STIFF = 170, FP_DAMP = 24, FP_DT = 1 / 60;
+    const fpFrame = () => {
+      const target = fpTarget();
+      const accel = -FP_STIFF * (fpCur - target) - FP_DAMP * fpVel;
+      fpVel += accel * FP_DT;
+      fpCur += fpVel * FP_DT;
+      fpRender(fpCur);
+      if (Math.abs(target - fpCur) > 0.0004 || Math.abs(fpVel) > 0.0004) {
+        requestAnimationFrame(fpFrame);
+      } else {
+        fpCur = target; fpVel = 0; fpRunning = false; fpRender(fpCur);
+      }
+    };
+    const fpKick = () => { if (!fpRunning) { fpRunning = true; requestAnimationFrame(fpFrame); } };
+    const fpSnap = () => { fpCur = fpTarget(); fpVel = 0; fpRender(fpCur); };
+    let ticking = false;
+    const onScroll = () => {
+      if (nav) { if (window.scrollY > 36) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
+      if (!ticking) { ticking = true; requestAnimationFrame(() => { updatePar(); updateTl(); ticking = false; }); }
+      fpKick();
+    };
+    const initAll = () => { updatePar(); updateTl(); fpSnap(); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', initAll, { passive: true });
+    window.addEventListener('load', initAll);
+    onScroll();
+    initAll();
+    setTimeout(initAll, 400);
+    // open/closed status
+    this.updateOpen();
+    this._t = setInterval(() => this.updateOpen(), 60000);
+    // close modal on backdrop click / escape
+    const modal = document.getElementById('lb-reelmodal');
+    if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) this._closeReel(); });
+    this._onKey = (e) => { if (e.key === 'Escape') { this._closeReel(); const m = document.getElementById('lb-mobile'); if (m) { m.style.display = 'none'; m.setAttribute('data-open', '0'); } } };
+    document.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount() {
+    if (this._t) clearInterval(this._t);
+    if (this._onKey) document.removeEventListener('keydown', this._onKey);
+  }
+  isEN() { return document.documentElement.getAttribute('data-lang') === 'en'; }
+  updateOpen() {
+    const now = new Date();
+    const d = now.getDay();
+    const m = now.getHours() * 60 + now.getMinutes();
+    const within = (a, b) => m >= a && m < b;
+    let open = false;
+    if (d >= 2 && d <= 5) open = within(570, 810) || within(930, 1230);
+    else if (d === 6) open = within(540, 780);
+    const en = this.isEN();
+    const txt = open ? (en ? 'Open now' : 'Abierto ahora') : (en ? 'Closed now' : 'Cerrado ahora');
+    const col = open ? '#1ed760' : '#ff6b6b';
+    ['lb-openbadge', 'lb-openbadge2', 'lb-openbadge3'].forEach((id) => {
+      const b = document.getElementById(id);
+      if (!b) return;
+      b.textContent = txt;
+      const p = b.parentElement;
+      if (id === 'lb-openbadge2' && p) { p.style.color = col; const dot = p.querySelector('span'); if (dot) dot.style.background = col; }
+      if (id === 'lb-openbadge3') { b.style.color = col; const dot = p && p.querySelector('span'); if (dot) dot.style.background = col; }
+    });
+    document.querySelectorAll('#lb-hours [data-day]').forEach((row) => {
+      row.classList.toggle('today', Number(row.getAttribute('data-day')) === d);
+    });
+  }
+  _closeReel() {
+    const modal = document.getElementById('lb-reelmodal');
+    if (!modal) return;
+    const v = document.getElementById('lb-reel-video');
+    try { v.pause(); } catch (e) {}
+    v.removeAttribute('src'); v.load && v.load();
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  renderVals() {
+    return {
+      toggleMenu: () => {
+        const m = document.getElementById('lb-mobile');
+        if (!m) return;
+        const open = m.getAttribute('data-open') === '1';
+        m.setAttribute('data-open', open ? '0' : '1');
+        m.style.display = open ? 'none' : 'flex';
+        document.body.style.overflow = open ? '' : 'hidden';
+      },
+      closeMenu: () => {
+        const m = document.getElementById('lb-mobile');
+        if (m) { m.setAttribute('data-open', '0'); m.style.display = 'none'; document.body.style.overflow = ''; }
+      },
+      toggleLang: () => {
+        const toEN = !this.isEN();
+        document.documentElement.setAttribute('data-lang', toEN ? 'en' : 'es');
+        document.querySelectorAll('[data-en]').forEach((el) => {
+          if (el.getAttribute('data-es') == null) el.setAttribute('data-es', el.textContent);
+          el.textContent = toEN ? el.getAttribute('data-en') : el.getAttribute('data-es');
+        });
+        document.querySelectorAll('.lb-langbtn').forEach((b) => { b.textContent = toEN ? 'ES' : 'EN'; });
+        this.updateOpen();
+      },
+      openReel: (e) => {
+        const c = e.currentTarget;
+        const code = c.getAttribute('data-code');
+        const modal = document.getElementById('lb-reelmodal');
+        if (!modal) return;
+        document.getElementById('lb-reel-poster').src = 'uploads/luchybarber_media/fullres/images/' + code + '_poster.jpg';
+        document.getElementById('lb-reel-poster').style.display = 'block';
+        document.getElementById('lb-reel-cap').textContent = c.getAttribute('data-cap') || '';
+        document.getElementById('lb-reel-views').textContent = '▶ ' + (c.getAttribute('data-views') || '');
+        document.getElementById('lb-reel-ig').href = 'https://www.instagram.com/p/' + code + '/';
+        const v = document.getElementById('lb-reel-video');
+        v.style.display = 'none'; v.removeAttribute('src'); v.setAttribute('data-code', code);
+        document.getElementById('lb-reel-play').style.display = 'flex';
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      },
+      playReel: () => {
+        const v = document.getElementById('lb-reel-video');
+        const code = v.getAttribute('data-code');
+        if (!code) return;
+        v.src = 'uploads/luchybarber_media/fullres/videos/' + code + '_1.mp4';
+        v.style.display = 'block';
+        v.muted = false;
+        document.getElementById('lb-reel-poster').style.display = 'none';
+        document.getElementById('lb-reel-play').style.display = 'none';
+        const p = v.play();
+        if (p && p.catch) p.catch(() => {});
+      },
+      closeReel: () => this._closeReel(),
+      toggleFaq: (e) => {
+        const item = e.currentTarget.closest('[data-faq]');
+        if (!item) return;
+        const open = item.getAttribute('data-open') === '1';
+        document.querySelectorAll('[data-faq]').forEach((f) => {
+          if (f !== item) {
+            f.setAttribute('data-open', '0');
+            const a = f.querySelector('.lb-faq-a'); if (a) a.style.maxHeight = '0px';
+            const ic = f.querySelector('.lb-faq-ic'); if (ic) { ic.textContent = '+'; ic.style.transform = 'none'; }
+          }
+        });
+        item.setAttribute('data-open', open ? '0' : '1');
+        const a = item.querySelector('.lb-faq-a');
+        const ic = item.querySelector('.lb-faq-ic');
+        if (a) a.style.maxHeight = open ? '0px' : (a.scrollHeight + 24) + 'px';
+        if (ic) ic.textContent = open ? '+' : '–';
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

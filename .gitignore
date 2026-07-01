@@ -1,0 +1,22 @@
+# Editor / local artifacts (not part of the live site)
+screens/
+.thumbnail
+Luchybarber - Inicio (opciones).dc.html
+uploads/pasted-*
+
+# Unused scrape/gallery files (not referenced by the site)
+uploads/luchybarber_media/full/
+uploads/luchybarber_media/fullres/index.html
+uploads/luchybarber_media/fullres/captions.txt
+
+# Videos: keep only the 8 reels that actually play on the site (drops ~325 MB)
+uploads/luchybarber_media/*_video.mp4
+uploads/luchybarber_media/fullres/videos/*
+!uploads/luchybarber_media/fullres/videos/DLPn3z0scaR_1.mp4
+!uploads/luchybarber_media/fullres/videos/C9-P1lYsteA_1.mp4
+!uploads/luchybarber_media/fullres/videos/C6Jqc-_IbeR_1.mp4
+!uploads/luchybarber_media/fullres/videos/C6tTRWqhW5G_1.mp4
+!uploads/luchybarber_media/fullres/videos/C-FpVnzI7Tc_1.mp4
+!uploads/luchybarber_media/fullres/videos/DKSxB6kIc-o_1.mp4
+!uploads/luchybarber_media/fullres/videos/DQt603tDGaj_1.mp4
+!uploads/luchybarber_media/fullres/videos/CyDy0mloQE4_1.mp4
